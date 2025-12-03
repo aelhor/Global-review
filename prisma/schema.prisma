@@ -1,0 +1,42 @@
+//🧩Don't Edit this file.✨Generated in Sun Nov 16 2025 21:12:47 GMT+0200 (Eastern European Standard Time)✨
+
+generator client {
+provider = "prisma-client-js"
+previewFeatures = ["relationJoins"]
+}
+datasource db {
+provider = "mysql"
+url      = env("DATABASE_URL")
+}
+model Entity {
+  id           Int       @id @default(autoincrement())
+  title        String
+  description  String?
+  category     String
+  averageRating Float    @default(0)
+  reviewCount  Int       @default(0)
+  createdAt    DateTime  @default(now())
+  authorId     Int
+  author       User      @relation(fields: [authorId], references: [id])
+  reviews      Review[]
+}
+model Review {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  content   String?
+  rating    Int
+  createdAt DateTime @default(now())
+  authorId  Int
+  entityId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+  entity    Entity   @relation(fields: [entityId], references: [id])
+}
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  passwordHash String
+  username     String    @unique
+  createdAt    DateTime  @default(now())
+  entities     Entity[]
+  reviews      Review[]
+}
