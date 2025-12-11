@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param, UseGuards, Request, Query, ParseIntPipe, HttpStatus, HttpCode } from '@nestjs/common';
 import { CreateEntityDto } from './dto/create-entity.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // Used for F1
-import { User } from '@prisma/client'; // Used for request typing
+// import { User } from '@prisma/client'; // Used for request typing
 import { EntityService } from './entities.service';
 
 @Controller('entities')
@@ -15,7 +15,7 @@ export class EntityController {
   @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createEntityDto: CreateEntityDto, @Request() req: { user: User }) {
+  async create(@Body() createEntityDto: CreateEntityDto, @Request() req: any) {
     const authorId = req.user.id;
     return this.entityService.create(createEntityDto, authorId);
   }

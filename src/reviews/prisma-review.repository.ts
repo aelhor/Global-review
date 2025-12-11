@@ -1,5 +1,5 @@
 import { Injectable, ConflictException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { IReviewRepository, ReviewDetails, ReviewAggregates } from './review.repository.interface';
 import { CreateReviewDto } from './dto/create-review.dto';
 

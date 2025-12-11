@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 
 import { CreateReviewDto } from './dto/create-review.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { User } from '@prisma/client';
 import { ReviewService } from './reviews.service';
 

@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { User } from '@prisma/client';
 
 // Define the structure of the token payload received from the client
@@ -11,7 +11,7 @@ interface JwtPayload {
   username: string;
   iat: number;
   exp: number;
-}   
+}
 
 @Injectable()
 // Extends the Passport Strategy for JWT, registering it as 'jwt'
@@ -37,6 +37,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
    * @returns The User object to be attached to the request
    */
   async validate(payload: JwtPayload): Promise<User> {
+    if (!payload || !payload.sub) {
+      throw new UnauthorizedException('Invalid token payload');
+    }
     const user = await this.prisma.user.findUnique({
       where: { id: payload.sub },
     });
@@ -45,7 +48,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       // If the user ID in the token doesn't exist (e.g., account deleted)
       throw new UnauthorizedException('User not found or token expired.');
     }
-    
+
     // We return the full User object (minus the passwordHash) which will be injected into req.user
     const { passwordHash, ...result } = user;
     return result as User;

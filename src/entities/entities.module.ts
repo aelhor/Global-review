@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
-
-import { PrismaModule } from 'src/prisma/prisma.module';
-import { AuthModule } from 'src/auth/auth.module'; // Needed for JwtAuthGuard usage
+import { PrismaModule } from '../prisma/prisma.module';
+import { AuthModule } from '../auth/auth.module'; 
 import { EntityController } from './entities.controller';
 import { EntityService } from './entities.service';
 import { PrismaEntityRepository } from './prisma.entity.repositoty';

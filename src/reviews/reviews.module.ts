@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 
-import { PrismaModule } from 'src/prisma/prisma.module';
-import { AuthModule } from 'src/auth/auth.module';
-// import { EntityModule } from 'src/entities/entity.module'; // <-- Crucial: Needed for EntityService/Repository
+import { PrismaModule } from '../prisma/prisma.module';
+import { AuthModule } from '../auth/auth.module';
+
 import { PrismaReviewRepository } from './prisma-review.repository';
 import { REVIEW_REPOSITORY } from './review.repository.interface';
 import { ReviewController } from './reviews.controller';
 import { ReviewService } from './reviews.service';
-import { EntitiesModule } from 'src/entities/entities.module';
+import { EntitiesModule } from '../entities/entities.module';
 
 @Module({
   imports: [
